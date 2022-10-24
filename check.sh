@@ -4,5 +4,5 @@
 
 poetry install
 poetry run pytest -s
-poetry run mypy -p classy_fastapi
+poetry run mypy -p routes_fastapi
 poetry run flake8

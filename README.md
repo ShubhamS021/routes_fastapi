@@ -6,7 +6,7 @@ construct an **instance** of a class and have methods of that instance be route 
 ```py
 from dao import Dao
 # Some fictional dao
-from classy_fastapi import Routable, get, delete
+from routes_fastapi import Routable, get, delete
 
 def parse_arg() -> argparse.Namespace:
    """parse command line arguments."""

@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "classy-fastapi"
+name = "routes-fastapi"
 version = "0.6.1"
 description = "Class based routing for FastAPI"
 authors = ["Oliver Dain <oliver@dains.org>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://gitlab.com/companionlabs-opensource/classy-fastapi"
-repository = "https://gitlab.com/companionlabs-opensource/classy-fastapi"
+homepage = "https://github.com/ShubhamS021/routes-fastapi"
+repository = "https://github.com/ShubhamS021/routes-fastapi"
 keywords = ["FastAPI", "Class", "Instance", "Routing"]
 
 [tool.poetry.dependencies]

@@ -31,8 +31,7 @@ def route(path: str, methods: List[str], **kwargs: Any) -> Callable[[AnyCallable
         if not args.description:
             description = inspect.cleandoc(method.__doc__ or "")
             # Note that the description has to have at least one character or the docs will, incorrectly, come from the
-            # partial class. See
-            # https://gitlab.com/companionlabs-opensource/classy-fastapi/-/merge_requests/8#note_1108105696.
+            # partial class.
             args.description = description or " "
         setattr(method, '_endpoint',
                 EndpointDefinition(endpoint=method, args=args))
@@ -311,8 +310,7 @@ def websocket(path: str, name: Optional[str] = None) -> Callable[[AnyCallable], 
         if not args.description:
             description = inspect.cleandoc(method.__doc__ or "")
             # Note that the description has to have at least one character or the docs will, incorrectly, come from the
-            # partial class. See
-            # https://gitlab.com/companionlabs-opensource/classy-fastapi/-/merge_requests/8#note_1108105696.
+            # partial class.
             args.description = description or " "
         setattr(method, '_endpoint',
                 WebSocketEndpointDefinition(endpoint=method, args=args))
