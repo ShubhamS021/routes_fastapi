@@ -58,3 +58,8 @@ class EndpointDefinition:
     """
     endpoint: Callable[..., Any]
     args: RouteArgs
+
+
+@dataclass
+class WebSocketEndpointDefinition(EndpointDefinition):
+    pass

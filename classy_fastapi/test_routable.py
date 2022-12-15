@@ -1,8 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from fastapi.responses import PlainTextResponse
 from fastapi.testclient import TestClient
 
-from .decorators import get, post
+from .decorators import get, post, websocket
 from .routable import Routable
 
 
@@ -26,6 +26,13 @@ class ExampleRoutable(Routable):
     @get(path='/aecho/{val}', response_class=PlainTextResponse)
     async def aecho(self, val: str) -> str:
         return f'{val} {self.__injected}'
+
+    @websocket("/ws/aecho")
+    async def websocket_aecho(self, websocket: WebSocket):
+        await websocket.accept()
+        val = await websocket.receive_text()
+        await websocket.send_text(f'{val} {self.__injected + 1}')
+        await websocket.close()
 
 
 def test_routes_respond() -> None:
@@ -93,3 +100,14 @@ def test_async_methods_with_args_work() -> None:
     response = client.get('/aecho/hello')
     assert response.status_code == 200
     assert response.text == 'hello 2'
+
+
+def test_async_websocket_methods_with_args_work() -> None:
+    app = FastAPI()
+    t = ExampleRoutable(2)
+    app.include_router(t.router)
+
+    client = TestClient(app)
+    with client.websocket_connect("/ws/aecho") as websocket:
+        websocket.send_text('hello')
+        assert websocket.receive_text() == 'hello 3'
