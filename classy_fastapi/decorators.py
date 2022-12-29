@@ -299,7 +299,7 @@ def delete(
         **kwargs)
 
 
-def websocket(path: str, name: str = None) -> Callable[[AnyCallable], AnyCallable]:
+def websocket(path: str, name: Optional[str] = None) -> Callable[[AnyCallable], AnyCallable]:
     """Websocket route definition. Requirea a path and optionally a name.
 
     """
