@@ -9,7 +9,7 @@ default:
 
 check_3.11:
   variables:
-    python_version: 3.11
+    python_version: "3.11"
   image: "registry.gitlab.com/companionlabs-opensource/classy-fastapi:v004-py${python_version}"
   stage: check
   script:
@@ -18,7 +18,7 @@ check_3.11:
 check_3.9:
   extends: check_3.11
   variables:
-    python_version: 3.9
+    python_version: "3.9"
 
 
 pypi:
