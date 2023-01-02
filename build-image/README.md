@@ -6,4 +6,6 @@ different versions. For example:
 $ ./build_push_all.sh v005
 ```
 
-would create new images tagged `registry.gitlab.com/companionlabs-opensource/classy-fastapi:v005-py3.9` and `registry.gitlab.com/companionlabs-opensource/classy-fastapi:v005-py3.11` for the two different versions of Python we currently support. Our CI then runs the same check.sh script against these different versions of Python.
+would create new images tagged `registry.gitlab.com/companionlabs-opensource/classy-fastapi:v005-py3.9` and
+`registry.gitlab.com/companionlabs-opensource/classy-fastapi:v005-py3.11` for the two different versions of Python we
+currently support. Our CI then runs the same check.sh script against these different versions of Python.
