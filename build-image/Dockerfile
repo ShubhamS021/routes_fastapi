@@ -1,4 +1,7 @@
-FROM python:3.9.7-bullseye
+ARG PYTHON_VERSION=3.9.7-bullseye
+
+FROM python:${PYTHON_VERSION}
+
 RUN useradd -ms /bin/bash companionlabs
 
 USER companionlabs

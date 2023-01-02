@@ -3,16 +3,25 @@ stages:
   - deploy
 
 default:
-  image: "registry.gitlab.com/companionlabs-opensource/classy-fastapi:v003"
   before_script:
     - 'echo "protected: $CI_COMMIT_REF_PROTECTED. Tag: $CI_COMMIT_TAG"'
 
-check:
+check_3.11:
+  variables:
+    python_version: "3.11"
+  image: "registry.gitlab.com/companionlabs-opensource/classy-fastapi:v004-py${python_version}"
   stage: check
   script:
     - ./check.sh
 
+check_3.9:
+  extends: check_3.11
+  variables:
+    python_version: "3.9"
+
+
 pypi:
+  image: "registry.gitlab.com/companionlabs-opensource/classy-fastapi:v003"
   stage: deploy
   script:
     - echo Branch is $CI_COMMIT_BRANCH and tag is $CI_COMMIT_TAG. Deploying.
