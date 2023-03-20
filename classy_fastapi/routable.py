@@ -5,7 +5,7 @@ from typing import Any, Callable, Dict, List, Tuple, Type, TypeVar, cast
 
 from fastapi.routing import APIRouter
 
-from .route_args import EndpointDefinition, WebSocketEndpointDefinition
+from .route_args import EndpointDefinition, EndpointType
 
 AnyCallable = TypeVar('AnyCallable', bound=Callable[..., Any])
 
@@ -35,7 +35,7 @@ class Routable(metaclass=RoutableMeta):
     def __init__(self, *args, **kwargs) -> None:
         self.router = APIRouter(*args, **kwargs)
         for endpoint in self._endpoints:
-            if issubclass(type(endpoint), WebSocketEndpointDefinition):
+            if endpoint.type() == EndpointType.WEBSOCKET:
                 self.router.add_api_websocket_route(path=endpoint.args.path,
                                                     endpoint=partial(endpoint.endpoint, self),
                                                     name=endpoint.args.name)
