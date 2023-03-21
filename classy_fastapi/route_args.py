@@ -1,12 +1,13 @@
 from dataclasses import dataclass, field
-from typing import (Any, Callable, Dict, List, Optional, Sequence, Set, Type,
-                    Union)
+from typing import (Any, Callable, Dict, List, Optional, Protocol, Sequence,
+                    Set, Type, Union)
 
 from fastapi import Response, params
 from fastapi.datastructures import Default, DefaultPlaceholder
 from fastapi.responses import JSONResponse
 from fastapi.routing import APIRoute
 from starlette.routing import Route
+from enum import Enum, auto
 
 SetIntStr = Set[Union[int, str]]
 DictIntStrAny = Dict[Union[int, str], Any]
@@ -50,6 +51,16 @@ class RouteArgs:
         arbitrary_types_allowed = True
 
 
+class EndpointType(Enum):
+    REST = auto()
+    WEBSOCKET = auto()
+
+
+class EndpointDefinitionProto(Protocol):
+    def type(self) -> EndpointType:
+        pass
+
+
 @dataclass
 class EndpointDefinition:
     """RouteArgs plus the endpoint.
@@ -58,3 +69,11 @@ class EndpointDefinition:
     """
     endpoint: Callable[..., Any]
     args: RouteArgs
+
+    def type(self) -> EndpointType:
+        return EndpointType.REST
+
+
+class WebSocketEndpointDefinition(EndpointDefinition):
+    def type(self) -> EndpointType:
+        return EndpointType.WEBSOCKET

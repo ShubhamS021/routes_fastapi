@@ -1,4 +1,4 @@
-from .decorators import delete, get, post, patch, put
+from .decorators import delete, get, post, patch, put, websocket
 from .routable import Routable
 
-__all__ = ['Routable', 'get', 'post', 'patch', 'put', 'delete']
+__all__ = ['Routable', 'get', 'post', 'patch', 'put', 'delete', 'websocket']

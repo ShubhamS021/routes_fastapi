@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 
 from starlette.routing import BaseRoute
 
-from .route_args import EndpointDefinition, RouteArgs
+from .route_args import EndpointDefinition, WebSocketEndpointDefinition, RouteArgs
 
 AnyCallable = TypeVar('AnyCallable', bound=Callable[..., Any])
 
@@ -297,3 +297,23 @@ def delete(
         callbacks=callbacks,
         openapi_extra=openapi_extra,
         **kwargs)
+
+
+def websocket(path: str, name: Optional[str] = None) -> Callable[[AnyCallable], AnyCallable]:
+    """Websocket route definition. Requirea a path and optionally a name.
+
+    """
+    def marker(method: AnyCallable) -> AnyCallable:
+        args = RouteArgs(path=path, methods=None, name=name)
+        if args.name is None:
+            args.name = method.__name__
+        if not args.description:
+            description = inspect.cleandoc(method.__doc__ or "")
+            # Note that the description has to have at least one character or the docs will, incorrectly, come from the
+            # partial class. See
+            # https://gitlab.com/companionlabs-opensource/classy-fastapi/-/merge_requests/8#note_1108105696.
+            args.description = description or " "
+        setattr(method, '_endpoint',
+                WebSocketEndpointDefinition(endpoint=method, args=args))
+        return method
+    return marker
