@@ -24,12 +24,12 @@ class UserRoutes(Routable):
       self.__dao = Dao
 
    @get('/user/{name}')
-   def get_user_by_name(name: str) -> User:
+   def get_user_by_name(self, name: str) -> User:
       # Use our injected DAO instance.
       return self.__dao.get_user_by_name(name)
 
    @delete('/user/{name}')
-   def delete_user(name: str) -> None:
+   def delete_user(self, name: str) -> None:
       self.__dao.delete(name)
 
 
