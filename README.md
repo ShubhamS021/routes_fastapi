@@ -16,20 +16,20 @@ def parse_arg() -> argparse.Namespace:
 class UserRoutes(Routable):
    """Inherits from Routable."""
 
-   # Note injection here by simply passing values to the constructor. Other injection frameworks also 
-   # supported as there's nothing sepecial about this __init__ method.
+   # Note injection here by simply passing values to the constructor. Other injection frameworks also
+   # supported as there's nothing special about this __init__ method.
    def __init__(self, dao: Dao) -> None:
       """Constructor. The Dao is injected here."""
       super().__init__()
       self.__dao = Dao
 
    @get('/user/{name}')
-   def get_user_by_name(name: str) -> User:
+   def get_user_by_name(self, name: str) -> User:
       # Use our injected DAO instance.
       return self.__dao.get_user_by_name(name)
 
    @delete('/user/{name}')
-   def delete_user(name: str) -> None:
+   def delete_user(self, name: str) -> None:
       self.__dao.delete(name)
 
 
@@ -39,9 +39,9 @@ def main():
     dao = Dao(args.url, args.user, args.password)
     # Simple intuitive injection
     user_routes = UserRoutes(dao)
-    
+
     app = FastAPI()
-    # router memeber inherited from cr.Routable and configured per the annotations.
+    # router member inherited from cr.Routable and configured per the annotations.
     app.include_router(user_routes.router)
 ```
 
@@ -114,7 +114,7 @@ def main():
     args = parse_args()
     global dao
     dao = Dao(args.url, args.user, args.password)
-    
+
     app = FastAPI()
     app.include_router(user.router)
 
