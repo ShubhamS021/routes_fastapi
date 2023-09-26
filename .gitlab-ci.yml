@@ -34,6 +34,4 @@ pypi:
   rules:
     # Only deploy if on the default (protected) branch and there's a tag that looks like a version tag.
     - if: $CI_COMMIT_REF_PROTECTED && $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+.*/
-      changes:
-        - "classy_fastapi/**/*"
-        - "pyproject.toml"
+
