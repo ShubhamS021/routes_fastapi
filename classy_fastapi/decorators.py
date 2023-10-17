@@ -1,17 +1,18 @@
 import inspect
 from enum import Enum
-from typing import (Any, Callable, Dict, List, Optional, Sequence, Type,
-                    Union, TypeVar)
+from typing import (Any, Callable, Dict, List, Optional, Sequence, Set, Type,
+                    TypeVar, Union)
 
 from fastapi import Response, params
-from fastapi.encoders import DictIntStrAny, SetIntStr
 from fastapi.datastructures import Default
 from fastapi.responses import JSONResponse
-
 from starlette.routing import BaseRoute
 
-from .route_args import EndpointDefinition, WebSocketEndpointDefinition, RouteArgs
+from .route_args import (EndpointDefinition, RouteArgs,
+                         WebSocketEndpointDefinition)
 
+SetIntStr = Set[Union[int, str]]
+DictIntStrAny = Dict[Union[int, str], Any]
 AnyCallable = TypeVar('AnyCallable', bound=Callable[..., Any])
 
 
